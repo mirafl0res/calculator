@@ -1,4 +1,3 @@
-
 // NUMBER BUTTONS
 const btnOne = document.querySelector("#one-btn");
 const btnTwo = document.querySelector("#two-btn");
@@ -19,9 +18,11 @@ const btnSubtract = document.querySelector("#subtract-btn");
 const btnMultiply = document.querySelector("#multiply-btn");
 const btnDivide = document.querySelector("#divide-btn");
 const btnEquals = document.querySelector("#equals-btn");
-// TODO: 
-// - [ ] add function for plusminus-button
-// - [ ] add function for percentage button
+const btnPlusMinus = document.querySelector("#plusminus-btn");
+
+
+const operators = ["+", "-", "*", "/", "%"]
+
 
 // DISPLAY
 const display = document.querySelector("#display-area");
@@ -57,26 +58,123 @@ btnZero.addEventListener("click", () => {
   display.textContent += "0";
 });
 btnDot.addEventListener("click", () => {
-  display.textContent += ".";
+  // Prevent multiple dots in a row
+  if (display.value.endsWith(".")) {
+    return;
+  } else display.textContent += ".";
 });
-
 
 btnClear.addEventListener("click", () => {
   display.textContent = "";
 });
 btnAdd.addEventListener("click", () => {
-  display.textContent += "+";
+  // Prevent multiple operators in a row
+  if (display.value.endsWith("+")) {
+    return;
+  } else display.textContent += "+";
 });
 btnSubtract.addEventListener("click", () => {
-  display.textContent += "-";
+  // Prevent multiple operators in a row
+  if (display.value.endsWith("-")) {
+    return;
+  } else display.textContent += "-";
 });
 btnMultiply.addEventListener("click", () => {
-  display.textContent += "*";
+  // Prevent multiple operators in a row
+  if (display.value.endsWith("*")) {
+    return;
+  } else display.textContent += "*";
 });
+
 btnDivide.addEventListener("click", () => {
-  display.textContent += "/";
+  // Prevent multiple operators in a row
+  if (display.value.endsWith("/")) {
+    return;
+  } else display.textContent += "/";
 });
 
-
+btnPlusMinus.addEventListener("click", () => {
+  const displayContent = display.value;
+  if (!displayContent) return;
+  display.textContent = `(-${displayContent})`;
+  // TODO: add toggle function
+});
 
 // btnEquals.addEventListener("click", () => {
+
+
+
+
+document.addEventListener("keydown", (event) => {
+  // Operator keys
+  if (event.key === "/") {
+    if (display.value.endsWith("/")) {
+        return;
+    } else display.textContent += "/";
+  }
+  if (event.key === "*") {
+    if (display.value.endsWith("*")) {
+      return;
+    } else display.textContent += "*";
+  }
+  if (event.key === "-") {
+    if (display.value.endsWith("-")) {
+        return;
+    } else display.textContent += "-";
+  }
+  if (event.key === "+") {
+    if (display.value.endsWith("+")) {
+        return;
+    } else display.textContent += "+";
+  }
+  if (event.key === "Enter") {
+    // TODO: function: calculateInput
+  }
+  if (event.key.toLowerCase() === "c") {
+    display.textContent = "";
+  }
+
+  // Number keys
+  if (event.key === "1") {
+    display.textContent += "1";
+  }
+  if (event.key === "2") {
+    display.textContent += "2";
+  }
+  if (event.key === "3") {
+    display.textContent += "3";
+  }
+  if (event.key === "4") {
+    display.textContent += "4";
+  }
+  if (event.key === "5") {
+    display.textContent += "5";
+  }
+  if (event.key === "6") {
+    display.textContent += "6";
+  }
+  if (event.key === "7") {
+    display.textContent += "7";
+  }
+  if (event.key === "8") {
+    display.textContent += "8";
+  }
+  if (event.key === "9") {
+    display.textContent += "9";
+  }
+  if (event.key === "0") {
+    display.textContent += "0";
+  }
+  if (event.key === "." || event.key === ",") {
+    if (display.value.endsWith(".")) {
+        return;
+    } else display.textContent += ".";
+  }
+
+  // Backspace key
+  if (event.key === "Backspace" || event.key === "Delete") {
+    let string = display.value;
+    let newString = string.substring(0, string.length - 1);
+    display.textContent = newString;
+  }
+});

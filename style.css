@@ -1,8 +1,11 @@
 body {
+  background-color: rgb(126, 126, 149);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  /* box-sizing: border-box; */
 }
 
 .container {
@@ -10,10 +13,10 @@ body {
   max-width: 500px;
   padding: 10px;
   border: solid 3px rgb(70, 70, 70);
-  border-radius: 5px;
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   align-items: center;
   background-color: rgb(52, 51, 51);
 }
@@ -23,7 +26,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: .5rem;
+  margin: 0.5rem;
   height: 20vw;
   max-height: 100px;
 }
@@ -56,12 +59,30 @@ body {
   border-radius: 1rem;
   border: none;
   font-size: x-large;
-
 }
+
+.num-btn {
+  background-color: rgb(108, 108, 108);
+  color: rgb(234, 234, 234);
+}
+.num-btn:active {
+  background-color: rgb(174, 173, 173);
+}
+
 #zero-btn {
   grid-area: 5 / 1 / 5 / 3;
 }
 
 .operator-btn {
-  background-color: orange;
+  background-color: rgb(213, 140, 4);
+  color: rgb(234, 234, 234);
+}
+
+.operator-btn:active {
+  background-color: rgb(188, 123, 1);
+}
+
+.tool-btn {
+  background-color: rgb(143, 115, 78);
+  color: rgb(234, 234, 234);
 }
