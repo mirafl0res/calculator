@@ -10,7 +10,7 @@ const btnEight = document.querySelector("#eight-btn");
 const btnNine = document.querySelector("#nine-btn");
 const btnZero = document.querySelector("#zero-btn");
 const btnDot = document.querySelector("#dot-btn");
-
+// –—————————————————————————————————————————————————————————
 // OPERATOR BUTTONS
 const btnClear = document.querySelector("#clear-btn");
 const btnAdd = document.querySelector("#add-btn");
@@ -21,9 +21,9 @@ const btnEquals = document.querySelector("#equals-btn");
 const btnPlusMinus = document.querySelector("#plusminus-btn");
 
 
-const operators = ["+", "-", "*", "/", "%"]
+// const operators = ["+", "-", "*", "/", "%"]
 
-
+// –—————————————————————————————————————————————————————————
 // DISPLAY
 const display = document.querySelector("#display-area");
 
@@ -100,11 +100,13 @@ btnPlusMinus.addEventListener("click", () => {
   // TODO: add toggle function
 });
 
+
+
 // btnEquals.addEventListener("click", () => {
 
 
 
-
+// –—————————————————————————————————————————————————————————
 document.addEventListener("keydown", (event) => {
   // Operator keys
   if (event.key === "/") {
@@ -134,6 +136,7 @@ document.addEventListener("keydown", (event) => {
     display.textContent = "";
   }
 
+  // –—————————————————————————————————————————————————————————
   // Number keys
   if (event.key === "1") {
     display.textContent += "1";
