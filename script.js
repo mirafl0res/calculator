@@ -20,7 +20,6 @@ const btnDivide = document.querySelector("#divide-btn");
 const btnEquals = document.querySelector("#equals-btn");
 const btnPlusMinus = document.querySelector("#plusminus-btn");
 
-
 // const operators = ["+", "-", "*", "/", "%"]
 
 // –—————————————————————————————————————————————————————————
@@ -100,84 +99,56 @@ btnPlusMinus.addEventListener("click", () => {
   // TODO: add toggle function
 });
 
-
-
 // btnEquals.addEventListener("click", () => {
-
-
 
 // –—————————————————————————————————————————————————————————
 document.addEventListener("keydown", (event) => {
-  // Operator keys
-  if (event.key === "/") {
-    if (display.value.endsWith("/")) {
-        return;
-    } else display.textContent += "/";
+  const key = event.key;
+
+  // Valid keys
+  keyMap = {
+    1: "1",
+    2: "2",
+    3: "3",
+    4: "4",
+    5: "5",
+    6: "6",
+    7: "7",
+    8: "8",
+    9: "9",
+    0: "0",
+    "+": "+",
+    "-": "-",
+    "*": "*",
+    "/": "/",
+    "%": "%",
+    "(": "(",
+    ")": ")",
+    ".": ".",
+    ",": ".",
+  };
+
+  if (key in keyMap) {
+    const symbol = keyMap[key];
+    if (
+      ["+", "-", "*", "/"].includes(symbol) &&
+      display.textContent.endsWith(symbol)
+    ) {
+      return; // prevent duplicate operator
+    }
+    if (symbol === "." && display.textContent.endsWith(".")) {
+      return; // prevent duplicate dot
+    } else display.textContent += symbol;
   }
-  if (event.key === "*") {
-    if (display.value.endsWith("*")) {
-      return;
-    } else display.textContent += "*";
+
+  // Special keys
+  if (key === "Enter") {
+    // TODO: calculateInput();
   }
-  if (event.key === "-") {
-    if (display.value.endsWith("-")) {
-        return;
-    } else display.textContent += "-";
+  if (key === "Backspace" || key === "Delete") {
+    display.textContent = display.textContent.slice(0, -1);
   }
-  if (event.key === "+") {
-    if (display.value.endsWith("+")) {
-        return;
-    } else display.textContent += "+";
-  }
-  if (event.key === "Enter") {
-    // TODO: function: calculateInput
-  }
-  if (event.key.toLowerCase() === "c") {
+  if (key.toLowerCase() === "c") {
     display.textContent = "";
-  }
-
-  // –—————————————————————————————————————————————————————————
-  // Number keys
-  if (event.key === "1") {
-    display.textContent += "1";
-  }
-  if (event.key === "2") {
-    display.textContent += "2";
-  }
-  if (event.key === "3") {
-    display.textContent += "3";
-  }
-  if (event.key === "4") {
-    display.textContent += "4";
-  }
-  if (event.key === "5") {
-    display.textContent += "5";
-  }
-  if (event.key === "6") {
-    display.textContent += "6";
-  }
-  if (event.key === "7") {
-    display.textContent += "7";
-  }
-  if (event.key === "8") {
-    display.textContent += "8";
-  }
-  if (event.key === "9") {
-    display.textContent += "9";
-  }
-  if (event.key === "0") {
-    display.textContent += "0";
-  }
-  if (event.key === "." || event.key === ",") {
-    if (display.value.endsWith(".")) {
-        return;
-    } else display.textContent += ".";
-  }
-
-  // Backspace key
-  if (event.key === "Backspace" || event.key === "Delete") {
-    let string = display.value;
-    let newString = string.substring(0, string.length - 1);
-    display.textContent = newString;
   }
 });

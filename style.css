@@ -12,31 +12,30 @@ body {
 }
 
 .container {
-  width: 85%;
-  max-width: 400px;
+  width: 80vw;
+  max-width: 300px;
   padding: 10px;
   border: solid 3px rgb(70, 70, 70);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-around; */
   align-items: center;
   background-color: rgb(52, 51, 51);
 }
 
 .display-window {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 100%;
   margin: 0.5rem;
-  height: 20vw;
+  height: 10vh;
   max-height: 100px;
 }
 
 #display-area {
-  color: white;
-  font-size: 2.5rem;
+  color: rgb(232, 229, 229);
+  font-size: 1.2rem;
   width: 100%;
   height: 100%;
   display: block;
@@ -67,7 +66,7 @@ body {
   color: rgb(234, 234, 234);
 }
 .num-btn:active {
-  background-color: rgb(174, 173, 173);
+  background-color: rgb(108, 108, 108, 0.8);
 }
 
 #zero-btn {
@@ -80,10 +79,14 @@ body {
 }
 
 .operator-btn:active {
-  background-color: rgb(188, 123, 1);
+  background-color: rgb(213, 140, 4, 0.8);
 }
 
 .tool-btn {
   background-color: rgb(143, 115, 78);
   color: rgb(234, 234, 234);
+}
+
+.tool-btn:active {
+  background-color: rgba(143, 115, 78, 0.8);
 }
