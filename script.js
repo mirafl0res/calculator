@@ -128,19 +128,24 @@ document.addEventListener("keydown", (event) => {
     ",": ".",
   };
 
-  if (key in keyMap) {
-    const symbol = keyMap[key];
-    if (
-      ["+", "-", "*", "/"].includes(symbol) &&
-      display.textContent.endsWith(symbol)
-    ) {
-      return; // prevent duplicate operator
-    }
-    if (symbol === "." && display.textContent.endsWith(".")) {
-      return; // prevent duplicate dot
-    } else display.textContent += symbol;
-  }
+  const operators = ["+", "-", "*", "/"];
+  const symbol = keyMap[key];
+  const lastChar = display.textContent.slice(-1);
 
+  if (key in keyMap) {
+    if (operators.includes(symbol)) {
+      if (symbol === lastChar) {
+        return; // prevent duplicate operator
+      } else if (operators.includes(lastChar)) {
+        const newString = display.textContent.slice(0, -1);
+        display.textContent = newString + symbol; // replace operator
+        return;
+      } else if (symbol === "." && display.textContent.endsWith(".")) {
+        return; // prevent duplicate dot
+      }
+    }
+    display.textContent += symbol;
+  }
   // Special keys
   if (key === "Enter") {
     // TODO: calculateInput();
