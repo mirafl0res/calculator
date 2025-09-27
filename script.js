@@ -44,7 +44,6 @@ keyMap = {
 
 const display = document.querySelector("#display-area");
 
-
 document.addEventListener("click", (event) => {
   const buttonId = event.target.id;
   const symbol = clickMap[buttonId];
@@ -83,8 +82,8 @@ document.addEventListener("click", (event) => {
   }
   // Prevent duplicate dots
   if (symbol === ".") {
-    const currentNumber = display.textContent.split(/[\+\-\*\/]/).pop();
-    if (currentNumber.includes(".")) return;
+    const currentcurrentNumber = display.textContent.split(/[\+\-\*\/]/).pop();
+    if (currentcurrentNumber.includes(".")) return;
   }
 
   display.textContent += symbol;
@@ -123,12 +122,43 @@ document.addEventListener("keydown", (event) => {
 
     // Prevent duplicate dots
     if (symbol === ".") {
-      const currentNumber = display.textContent.split(/[\+\-\*\/]/).pop();
-      if (currentNumber.includes(".")) return;
+      const currentcurrentNumber = display.textContent
+        .split(/[\+\-\*\/]/)
+        .pop();
+      if (currentcurrentNumber.includes(".")) return;
     }
 
     display.textContent += symbol;
   }
 });
 
+const isDigitOrDot = (char) => "0123456789.".includes(char);
+const isOperatorOrParenthesis = (char) => "+-*/%()".includes(char);
 
+const tokenize = (string) => {
+  let tokens = [];
+  let currentNumber = "";
+  for (const char of string) {
+    if (isDigitOrDot(char)) {
+      currentNumber += char;
+    } else if (isOperatorOrParenthesis(char)) {
+      if (currentNumber !== "") {
+        tokens.push(Number(currentNumber));
+        currentNumber = "";
+      }
+      tokens.push(char);
+    }
+  }
+  if (currentNumber !== "") {
+    tokens.push(Number(currentNumber));
+  }
+  return tokens;
+};
+
+
+
+
+
+
+
+console.log(tokenize("1234+445.34*25-12--24"));
