@@ -72,11 +72,19 @@ document.addEventListener("click", (event) => {
   const operators = ["+", "-", "*", "/"];
 
   if (operators.includes(symbol)) {
-    const displayContent = display.textContent;
-    const lastChar = displayContent.slice(-1);
+    const lastChar = display.textContent.slice(-1);
+
+    // Allow string to start with "-" or "("
+    if (display.textContent === "") {
+      if (symbol === "-" || symbol === "(") {
+        display.textContent += symbol;
+        return;
+      } else return;
+    }
 
     if (operators.includes(lastChar)) {
-      display.textContent = displayContent.slice(0, -1) + symbol;
+      const newString = display.textContent.slice(0, -1);
+      display.textContent = newString + symbol;
       return;
     }
   }
@@ -111,9 +119,14 @@ document.addEventListener("keydown", (event) => {
     const lastChar = display.textContent.slice(-1);
 
     if (operators.includes(symbol)) {
-      if (symbol === lastChar) {
-        return; // prevent duplicate operator
-      } else if (operators.includes(lastChar)) {
+      // Allow string to start with "-" or "("
+      if (display.textContent === "") {
+        if (symbol === "-" || symbol === "(") {
+          display.textContent += symbol;
+          return;
+        } else return;
+      }
+      if (operators.includes(lastChar)) {
         const newString = display.textContent.slice(0, -1);
         display.textContent = newString + symbol; // replace operator
         return;
@@ -158,14 +171,14 @@ const tokenize = (string) => {
 // console.log(tokenize("1234+445.34*25-12--24"));
 
 const add = (a, b) => a + b;
-const subtract = (a, b) => a - b; 
+const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
-console.log(add(4, 5))
-console.log(subtract(4, 5))
-console.log(multiply(4, 5))
-console.log(divide(4, 5))
+console.log(add(4, 5));
+console.log(subtract(4, 5));
+console.log(multiply(4, 5));
+console.log(divide(4, 5));
 /*
 
 const calculate = (tokens) => {
@@ -187,5 +200,3 @@ const calculate = (tokens) => {
 
 
 */
-
-
