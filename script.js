@@ -70,7 +70,7 @@ document.addEventListener("click", (event) => {
 
   // Prevent duplicate operators
   const operators = ["+", "-", "*", "/"];
-  const lastChar = display.textContent.slice(-1);
+
   if (operators.includes(symbol)) {
     const displayContent = display.textContent;
     const lastChar = displayContent.slice(-1);
@@ -155,10 +155,37 @@ const tokenize = (string) => {
   return tokens;
 };
 
+// console.log(tokenize("1234+445.34*25-12--24"));
+
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b; 
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
+
+console.log(add(4, 5))
+console.log(subtract(4, 5))
+console.log(multiply(4, 5))
+console.log(divide(4, 5))
+/*
+
+const calculate = (tokens) => {
+
+  for (const token of tokens) {
+    if (isDigitOrDot)
+    }
+
+
+  
+  
+  } 
+
+
+  - Look at tokens array
+  - IF index 0 is number THEN 
 
 
 
 
+*/
 
 
-console.log(tokenize("1234+445.34*25-12--24"));
