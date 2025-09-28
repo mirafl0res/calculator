@@ -44,6 +44,7 @@ keyMap = {
 
 const display = document.querySelector("#display-area");
 
+// --------------------------------------------------
 document.addEventListener("click", (event) => {
   const buttonId = event.target.id;
   const symbol = clickMap[buttonId];
@@ -57,7 +58,8 @@ document.addEventListener("click", (event) => {
     return;
   }
   if (symbol === "=") {
-    // TODO: calculateInput()
+    const tokens = tokenize(display.textContent);
+    display.textContent = calculateTokens(tokens);
     return;
   }
   if (symbol === "+/-") {
@@ -97,12 +99,14 @@ document.addEventListener("click", (event) => {
   display.textContent += symbol;
 });
 
+// --------------------------------------------------
 document.addEventListener("keydown", (event) => {
   const key = event.key;
 
   // Special keys
   if (key === "Enter") {
-    // TODO: calculateInput();
+    const tokens = tokenize(display.textContent);
+    display.textContent = calculateTokens(tokens);
     return;
   }
   if (key === "Backspace" || key === "Delete") {
@@ -126,6 +130,7 @@ document.addEventListener("keydown", (event) => {
           return;
         } else return;
       }
+
       if (operators.includes(lastChar)) {
         const newString = display.textContent.slice(0, -1);
         display.textContent = newString + symbol; // replace operator
@@ -145,6 +150,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// --------------------------------------------------
 const isDigitOrDot = (char) => "0123456789.".includes(char);
 const isOperatorOrParenthesis = (char) => "+-*/%()".includes(char);
 
@@ -168,35 +174,31 @@ const tokenize = (string) => {
   return tokens;
 };
 
-// console.log(tokenize("1234+445.34*25-12--24"));
+console.log(tokenize("1234+445.34*25-12-24"));
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
-console.log(add(4, 5));
-console.log(subtract(4, 5));
-console.log(multiply(4, 5));
-console.log(divide(4, 5));
-/*
+const calculateTokens = (tokens) => {
+  let currentValue = tokens[0];
 
-const calculate = (tokens) => {
+  let i = 1;
+  while (i < tokens.length) {
+    const operator = tokens[i];
+    const nextNumber = tokens[i + 1];
 
-  for (const token of tokens) {
-    if (isDigitOrDot)
+    if (operator === "+") {
+      currentValue = add(currentValue, nextNumber);
+    } else if (operator === "-") {
+      currentValue = subtract(currentValue, nextNumber);
+    } else if (operator === "*") {
+      currentValue = multiply(currentValue, nextNumber);
+    } else if (operator === "/") {
+      currentValue = divide(currentValue, nextNumber);
     }
-
-
-  
-  
-  } 
-
-
-  - Look at tokens array
-  - IF index 0 is number THEN 
-
-
-
-
-*/
+    i += 2;
+  }
+  return currentValue;
+};
