@@ -35,6 +35,7 @@ body {
 
 #display-area {
   color: rgb(235, 235, 235);
+  font-family: monospace;
   font-size: 2.5rem;
   width: 100%;
   height: 100%;
