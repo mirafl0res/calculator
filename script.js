@@ -1,4 +1,5 @@
-clickMap = {
+// ----- Constants -----
+const clickMap = {
   "one-btn": "1",
   "two-btn": "2",
   "three-btn": "3",
@@ -19,8 +20,7 @@ clickMap = {
   "clear-btn": "C",
   "equals-btn": "=",
 };
-
-keyMap = {
+const keyMap = {
   1: "1",
   2: "2",
   3: "3",
@@ -41,27 +41,38 @@ keyMap = {
   ".": ".",
   ",": ".",
 };
-
 const display = document.querySelector("#display-area");
 
-// --------------------------------------------------
+// ----- Reusable functions -----
+const calculateAndDisplay = () => {
+  const tokens = tokenize(display.textContent);
+  display.textContent = calculateTokens(tokens);
+};
+const clearDisplay = () => {
+  display.textContent = "";
+};
+const deleteLastChar = () => {
+  display.textContent = display.textContent.slice(0, -1);
+};
+
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
+
+const isDigitOrDot = (char) => "0123456789.".includes(char);
+const isOperatorOrParenthesis = (char) => "+-*/%()".includes(char);
+
+// ----- Event Listeners -----
 document.addEventListener("click", (event) => {
   const buttonId = event.target.id;
   const symbol = clickMap[buttonId];
 
   if (!(buttonId in clickMap)) return; // exit if clicked element isn’t a calculator button
 
-  // Special cases
-  // ------------------------------
-  if (symbol === "C") {
-    display.textContent = "";
-    return;
-  }
-  if (symbol === "=") {
-    const tokens = tokenize(display.textContent);
-    display.textContent = calculateTokens(tokens);
-    return;
-  }
+  // Special keys
+  if (symbol === "=") calculateAndDisplay();
+  if (symbol === "C") clearDisplay();
   if (symbol === "+/-") {
     const content = display.textContent;
     if (!content) return;
@@ -98,23 +109,13 @@ document.addEventListener("click", (event) => {
 
   display.textContent += symbol;
 });
-
-// --------------------------------------------------
 document.addEventListener("keydown", (event) => {
   const key = event.key;
 
   // Special keys
-  if (key === "Enter") {
-    const tokens = tokenize(display.textContent);
-    display.textContent = calculateTokens(tokens);
-    return;
-  }
-  if (key === "Backspace" || key === "Delete") {
-    display.textContent = display.textContent.slice(0, -1);
-  }
-  if (key.toLowerCase() === "c") {
-    display.textContent = "";
-  }
+  if (key === "Enter") calculateAndDisplay();
+  if (key.toLowerCase() === "c") clearDisplay();
+  if (key === "Backspace" || key === "Delete") deleteLastChar();
 
   const operators = ["+", "-", "*", "/"];
 
@@ -150,10 +151,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// --------------------------------------------------
-const isDigitOrDot = (char) => "0123456789.".includes(char);
-const isOperatorOrParenthesis = (char) => "+-*/%()".includes(char);
-
+// ----- Tokenizer & Calculator -----
 const tokenize = (string) => {
   let tokens = [];
   let currentNumber = "";
@@ -173,14 +171,6 @@ const tokenize = (string) => {
   }
   return tokens;
 };
-
-console.log(tokenize("1234+445.34*25-12-24"));
-
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
-
 const calculateTokens = (tokens) => {
   let currentValue = tokens[0];
 
