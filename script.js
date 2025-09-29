@@ -55,6 +55,16 @@ const deleteLastChar = () => {
   display.textContent = display.textContent.slice(0, -1);
 };
 
+const isStartSymbolAllowed = (symbol) => {
+  if (display.textContent === "") {
+    if (symbol === "-" || symbol === "(") {
+      display.textContent += symbol;
+    }
+    return false;
+  }
+  return true;
+};
+
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
@@ -71,30 +81,26 @@ document.addEventListener("click", (event) => {
   if (!(buttonId in clickMap)) return; // exit if clicked element isn’t a calculator button
 
   // Special keys
-  if (symbol === "=") calculateAndDisplay();
-  if (symbol === "C") clearDisplay();
+  if (symbol === "=") {
+    calculateAndDisplay();
+    return;
+  }
+  if (symbol === "C") {
+    clearDisplay();
+    return;
+  }
   if (symbol === "+/-") {
-    const content = display.textContent;
-    if (!content) return;
+    if (!display.textContent) return;
+    content = display.textContent;
     display.textContent = `(-${content})`;
     return;
   }
-  // ------------------------------
 
-  // Prevent duplicate operators
   const operators = ["+", "-", "*", "/"];
-
   if (operators.includes(symbol)) {
+    if (!isStartSymbolAllowed(symbol)) return;
+
     const lastChar = display.textContent.slice(-1);
-
-    // Allow string to start with "-" or "("
-    if (display.textContent === "") {
-      if (symbol === "-" || symbol === "(") {
-        display.textContent += symbol;
-        return;
-      } else return;
-    }
-
     if (operators.includes(lastChar)) {
       const newString = display.textContent.slice(0, -1);
       display.textContent = newString + symbol;
@@ -125,12 +131,7 @@ document.addEventListener("keydown", (event) => {
 
     if (operators.includes(symbol)) {
       // Allow string to start with "-" or "("
-      if (display.textContent === "") {
-        if (symbol === "-" || symbol === "(") {
-          display.textContent += symbol;
-          return;
-        } else return;
-      }
+      if (!isStartSymbolAllowed(symbol)) return;
 
       if (operators.includes(lastChar)) {
         const newString = display.textContent.slice(0, -1);
