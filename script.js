@@ -82,7 +82,8 @@ document.addEventListener("click", (event) => {
 
   // Special keys
   if (symbol === "=") {
-    calculateAndDisplay();
+    evalDisplay();
+    // calculateAndDisplay();
     return;
   }
   if (symbol === "C") {
@@ -119,7 +120,8 @@ document.addEventListener("keydown", (event) => {
   const key = event.key;
 
   // Special keys
-  if (key === "Enter") calculateAndDisplay();
+  if (key === "Enter") evalDisplay();
+  // if (key === "Enter") calculateAndDisplay();
   if (key.toLowerCase() === "c") clearDisplay();
   if (key === "Backspace" || key === "Delete") deleteLastChar();
 
@@ -192,4 +194,21 @@ const calculateTokens = (tokens) => {
     i += 2;
   }
   return currentValue;
+};
+
+// ----- Eval function -----
+const evalDisplay = () => {
+  const content = display.textContent;
+
+  if (!/^[0-9+\-*/%().\s]+$/.test(content)) {
+    display.textContent = "Invalid input";
+    return;
+  }
+
+  try {
+    const result = eval(content);
+    return (display.textContent = result);
+  } catch {
+    display.textContent = "Error";
+  }
 };
